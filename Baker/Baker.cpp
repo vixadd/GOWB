@@ -21,14 +21,21 @@ void Baker::bake_and_box(ORDER &anOrder) {
 }
 
 void Baker::beBaker() {
+
+	unique_lock<mutex> lk(mutex_order_inQ);
+	cv_order_inQ.wait(mutex_order_inQ);
+
+	unique_lock<mutex> lk_retrieve(mutex_order_outQ);
 	while(order_in_Q.size() > 0) {
+
+		lk_retrieve.lock();
+
 		ORDER o = order_in_Q.front();
 		order_in_Q.pop();
 
-		//Lock it here
+		lk_retirieve.unlock();
+
 		bake_and_box(o);
 		order_outvector.insert(o);
-
-		// Check condition variable
 	}
 }
