@@ -6,7 +6,7 @@
 #include <sstream>
 #include <string>
 
-#include "..\includes\file_io.h"
+#include "../includes/file_io.h"
 
 using namespace std;
 //if myString does not contain a string rep of number returns o

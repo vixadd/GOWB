@@ -1,7 +1,7 @@
 #include <string>
 #include "stdlib.h"
 
-#include "..\includes\Waiter.h"
+#include "../includes/Waiter.h"
 
 using namespace std;
 

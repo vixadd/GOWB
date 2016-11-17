@@ -1,6 +1,6 @@
 #pragma once
-#include "..\includes\constants.h"
-#include "..\includes\datastructs.h"
+#include "../includes/constants.h"
+#include "../includes/datastructs.h"
 
 class Baker
 {

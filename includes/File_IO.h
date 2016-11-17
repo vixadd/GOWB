@@ -3,8 +3,8 @@
 #include <vector>
 #include <vector>
 #include "stdlib.h"
-#include "..\includes\constants.h"
-#include "..\includes\datastructs.h"
+#include "../includes/constants.h"
+#include "../includes/datastructs.h"
 
 class File_IO
 {
