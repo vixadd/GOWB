@@ -6,12 +6,12 @@
 #include <vector>
 #include <string>
 
-#include ".\includes\box.h"
-#include ".\includes\constants.h"
-#include ".\includes\waiter.h"
-#include ".\includes\baker.h"
-#include ".\includes\datastructs.h"
-#include ".\includes\PRINT.h"
+#include "./includes/box.h"
+#include "./includes/constants.h"
+#include "./includes/Waiter.h"
+#include "./includes/Baker.h"
+#include "./includes/datastructs.h"
+#include "./includes/PRINT.h"
 
 using namespace std;
 

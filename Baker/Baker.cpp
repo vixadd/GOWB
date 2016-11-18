@@ -8,16 +8,25 @@ Baker::Baker(int id):id(id) { }
 Baker::~Baker() { }
 
 void Baker::bake_and_box(ORDER &anOrder) {
+	Box *box = new Box();
+	int donuts_inserted = 0;
 	while ( anOrder.number_donuts > 0 ) {
-		if( anOrder.number_donuts % DOZEN == 0 ) {
-			anOrder.boxes.insert(box);
-			Box box = new Box();
-		}
+		donuts_inserted = donuts_inserted+1;
+
+		cout << "Inserting Donut " + donuts_inserted + " into box" << endl;
+
 		DONUT d;
-		box.addDonut(d);
-		anOrder.number_donuts = anOrder.number_donuts -1;
+		box->addDonut(d);
+		anOrder.number_donuts = anOrder.number_donuts-1;
+
+		if( donuts_inserted % DOZEN == 0 ) {
+			cout << "We've reached the maximum number of donuts in this box..." << endl << "Switching out boxes..." << endl;
+                        anOrder.boxes.push_back(box);
+                        box = new Box();
+                }
+
 	}
-	anOrder.boxes.insert(box);
+	anOrder.boxes.push_back(box);
 }
 
 void Baker::beBaker() {
