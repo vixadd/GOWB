@@ -1,6 +1,7 @@
 #include <string>
 #include "stdlib.h"
 
+#include "../includes/externs.h"
 #include "../includes/Waiter.h"
 
 using namespace std;
@@ -14,7 +15,9 @@ Waiter::~Waiter() { }
  * returns: status of that accessor
  */
 int Waiter::getNext(ORDER &anOrder) {
-	int status = getNext(anOrder);
+
+	int status = myIO.getNext(anOrder);
+cout << "Recieved Order: " << anOrder.order_number << endl;
 	return status;
 }
 
@@ -24,14 +27,22 @@ int Waiter::getNext(ORDER &anOrder) {
  * when the tickets are ready.
  */
 void Waiter::beWaiter() {
+cout << "Okay, We are a waiter now... Set everything right." << endl;
+
 	ORDER o;
 	int status = getNext(o);
 	if(status == SUCCESS) b_WaiterIsFinished = false;
-	unique_lock<mutex> lock1(mutex_order_inQ, defer_lock);
+cout << "Notifying condition variable that order is in." << endl;
+	cv_order_inQ.notify_all();
+
+cout << "Preparing to make orders..." << endl;
+
 	while ( status == SUCCESS ) {
+cout << " Inserting Order " << o.order_number << " into queue " << endl;
 		order_in_Q.push(o);
 		status = getNext(o);
-		cv_order_inQ.notify_All();
+cout << "Notifying cv_order_inQ that there are jobs to do in the queue." << endl;
+		cv_order_inQ.notify_all();
 	}
 
 	if(status == FAIL && !b_WaiterIsFinished) b_WaiterIsFinished = true;

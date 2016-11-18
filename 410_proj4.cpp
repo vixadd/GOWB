@@ -28,7 +28,7 @@ mutex mutex_order_outQ;
 condition_variable cv_order_inQ;
 
 //when true its time for the baker to quit
-bool b_WaiterIsFinished = false;	
+bool b_WaiterIsFinished = false;
 
 //where orders are stored
 queue<ORDER> order_in_Q;
@@ -87,6 +87,11 @@ void audit_results() {
 
 int main()
 {
+	thread waiting(doWaiter, 10, "./in1.txt");
+	thread baking(doBaker, 20);
+
+	waiting.join();
+	baking.join();
 	return SUCCESS;
 }
 
