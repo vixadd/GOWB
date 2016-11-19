@@ -42,10 +42,13 @@ PRINT1("\nBAKER: Okay, We are Baker now, setting everything... ");
 PRINT1("BAKER: Waiting for a notification from waiter... ");
 
 	unique_lock<mutex> lk(mutex_order_inQ);
-	cv_order_inQ.wait(lk);
 
 PRINT1("BAKER: Ready to Process Orders");
-	while(order_in_Q.size() > 0 || !b_WaiterIsFinished) {
+	while(!b_WaiterIsFinished || !(order_in_Q.size() <= 0)) {
+
+		if(order_in_Q.size() <= 0) {
+			cv_order_inQ.wait(lk);
+		}
 
 // Use order out mutex for lockguard ...
 		mutex_order_outQ.lock();
