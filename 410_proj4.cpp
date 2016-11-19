@@ -98,6 +98,7 @@ int main()
 	waiting3.join();
 	baking.join();
 	baking2.join();
+
 	return SUCCESS;
 }
 

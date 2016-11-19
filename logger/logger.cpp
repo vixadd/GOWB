@@ -1,4 +1,4 @@
-#include "..\includes\logger.h"
+#include "../includes/logger.h"
 using namespace std;
 
 Logger::Logger(std::string filename) {
