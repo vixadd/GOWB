@@ -14,8 +14,7 @@ Waiter::~Waiter() { }
  * returns: status of that accessor
  */
 int Waiter::getNext(ORDER &anOrder) {
-	int status = getNext(anOrder);
-	return status;
+
 }
 
 /*
@@ -24,16 +23,6 @@ int Waiter::getNext(ORDER &anOrder) {
  * when the tickets are ready.
  */
 void Waiter::beWaiter() {
-	ORDER o;
-	int status = getNext(o);
-	if(status == SUCCESS) b_WaiterIsFinished = false;
-	unique_lock<mutex> lock1(mutex_order_inQ, defer_lock);
-	while ( status == SUCCESS ) {
-		order_in_Q.push(o);
-		status = getNext(o);
-		cv_order_inQ.notify_All();
-	}
 
-	if(status == FAIL && !b_WaiterIsFinished) b_WaiterIsFinished = true;
 }
 
