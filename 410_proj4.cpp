@@ -87,8 +87,8 @@ void audit_results() {
 
 int main()
 {
-	thread waiting(doWaiter, 10, "./in1.txt");
 	thread baking(doBaker, 20);
+	thread waiting(doWaiter, 10, "./in1.txt");
 
 	waiting.join();
 	baking.join();

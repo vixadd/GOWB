@@ -18,7 +18,7 @@ Waiter::~Waiter() { }
 int Waiter::getNext(ORDER &anOrder) {
 
 	int status = myIO.getNext(anOrder);
-PRINT2("Recieved Order: ", anOrder.order_number);
+PRINT2("GETNEXT: Recieved Order: ", anOrder.order_number);
 	return status;
 }
 
@@ -28,29 +28,23 @@ PRINT2("Recieved Order: ", anOrder.order_number);
  * when the tickets are ready.
  */
 void Waiter::beWaiter() {
-PRINT1("\nOkay, We are a waiter now... Set everything right.");
+PRINT1("\nOkay, We are a waiter now...");
 
 	ORDER o;
 	int status = getNext(o);
-	if(status == SUCCESS) b_WaiterIsFinished = false;
-PRINT1("Notifying condition variable that order is in.");
-	order_in_Q.push(o);
-
-	cv_order_inQ.notify_all();
-
-PRINT1("Preparing to make orders...");
 
 	while ( status == SUCCESS ) {
-		status = getNext(o);
 
-PRINT3("Inserting Order ", o.order_number, " into queue ");
+PRINT3("BEWAITER: Inserting Order ", o.order_number, " into queue ");
 
-//		lock_guard<mutex> lock(mutex_order_outQ);
+		mutex_order_outQ.lock();
 		order_in_Q.push(o);
+		mutex_order_outQ.unlock();
 
+		cv_order_inQ.notify_all();
+
+		status = getNext(o);
 	}
-
-	if(status == FAIL && !b_WaiterIsFinished) b_WaiterIsFinished = true;
-
+	b_WaiterIsFinished = true;
 }
 
