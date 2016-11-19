@@ -3,6 +3,7 @@
 
 #include "../includes/externs.h"
 #include "../includes/Waiter.h"
+#include "../includes/PRINT.h"
 
 using namespace std;
 
@@ -17,7 +18,7 @@ Waiter::~Waiter() { }
 int Waiter::getNext(ORDER &anOrder) {
 
 	int status = myIO.getNext(anOrder);
-cout << "Recieved Order: " << anOrder.order_number << endl;
+PRINT2("Recieved Order: ", anOrder.order_number);
 	return status;
 }
 
@@ -27,24 +28,29 @@ cout << "Recieved Order: " << anOrder.order_number << endl;
  * when the tickets are ready.
  */
 void Waiter::beWaiter() {
-cout << "Okay, We are a waiter now... Set everything right." << endl;
+PRINT1("\nOkay, We are a waiter now... Set everything right.");
 
 	ORDER o;
 	int status = getNext(o);
 	if(status == SUCCESS) b_WaiterIsFinished = false;
-cout << "Notifying condition variable that order is in." << endl;
+PRINT1("Notifying condition variable that order is in.");
+	order_in_Q.push(o);
+
 	cv_order_inQ.notify_all();
 
-cout << "Preparing to make orders..." << endl;
+PRINT1("Preparing to make orders...");
 
 	while ( status == SUCCESS ) {
-cout << " Inserting Order " << o.order_number << " into queue " << endl;
-		order_in_Q.push(o);
 		status = getNext(o);
-cout << "Notifying cv_order_inQ that there are jobs to do in the queue." << endl;
-		cv_order_inQ.notify_all();
+
+PRINT3("Inserting Order ", o.order_number, " into queue ");
+
+//		lock_guard<mutex> lock(mutex_order_outQ);
+		order_in_Q.push(o);
+
 	}
 
 	if(status == FAIL && !b_WaiterIsFinished) b_WaiterIsFinished = true;
+
 }
 
