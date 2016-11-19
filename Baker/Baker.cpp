@@ -44,11 +44,7 @@ PRINT1("BAKER: Waiting for a notification from waiter... ");
 	unique_lock<mutex> lk(mutex_order_inQ);
 
 PRINT1("BAKER: Ready to Process Orders");
-	while(!b_WaiterIsFinished || !(order_in_Q.size() <= 0)) {
-
-		if(order_in_Q.size() <= 0) {
-			cv_order_inQ.wait(lk);
-		}
+	while(!b_WaiterIsFinished || !order_in_Q.empty()) {
 
 // Use order out mutex for lockguard ...
 		mutex_order_outQ.lock();
@@ -60,7 +56,7 @@ PRINT2("BAKER: Processing Order Number ", o.order_number);
 		mutex_order_outQ.unlock();
 
 		bake_and_box(o);
-PRINT2("BAKER: Processed Order ", o.order_number);
+PRINT4("BAKER: Processed Order ", o.order_number, " ", order_in_Q.size());
 		order_out_Vector.push_back(o);
 	}
 }
