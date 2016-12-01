@@ -88,17 +88,19 @@ void audit_results() {
 int main()
 {
 	thread baking(doBaker, 20);
-	thread waiting(doWaiter, 10, "./in1.txt");
-	thread baking2(doBaker, 21);
-	thread waiting2(doWaiter, 11, "./in2.txt");
-	thread waiting3(doWaiter, 12, "./in3.txt");
+	//thread waiting(doWaiter, 10, "./in1.txt");
+	//thread baking2(doBaker, 21);
+	//thread waiting2(doWaiter, 11, "./in2.txt");
+	thread waiting3(doWaiter, 12, "./in4.txt");
 
-	waiting.join();
-	waiting2.join();
+	//waiting.join();
+	//waiting2.join();
 	waiting3.join();
 	baking.join();
-	baking2.join();
-
+	//baking2.join();
+cout << endl;
+	audit_results();
+cout << endl;
 	return SUCCESS;
 }
 

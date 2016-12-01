@@ -28,11 +28,11 @@ PRINT2("GETNEXT: Recieved Order: ", anOrder.order_number);
  * when the tickets are ready.
  */
 void Waiter::beWaiter() {
-PRINT1("\nOkay, We are a waiter now...");
+//PRINT1("\nOkay, We are a waiter now...");
 
 	ORDER o;
 	int status = getNext(o);
-
+	b_WaiterIsFinished = false;
 	while ( status == SUCCESS ) {
 
 PRINT3("BEWAITER: Inserting Order ", o.order_number, " into queue ");
