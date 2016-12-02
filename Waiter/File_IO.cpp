@@ -6,7 +6,8 @@
 #include <sstream>
 #include <string>
 
-#include "..\includes\file_io.h"
+#include "../includes/File_IO.h"
+#include "../includes/PRINT.h"
 
 using namespace std;
 //if myString does not contain a string rep of number returns o
@@ -53,7 +54,8 @@ int File_IO::processData(std::ifstream &file) {
 			anOrder.number_donuts = stringToInt(token.c_str());
 
 		//finally add to vector (makes a COPY of myMeasurement)
-		myOrders.push_back(anOrder);
+		if (line.find_first_not_of (' ') != line.npos)
+			myOrders.push_back(anOrder);
 
 		//clear stream so it will work for next read
 		ss.clear();

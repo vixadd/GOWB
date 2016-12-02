@@ -6,12 +6,12 @@
 #include <vector>
 #include <string>
 
-#include ".\includes\box.h"
-#include ".\includes\constants.h"
-#include ".\includes\waiter.h"
-#include ".\includes\baker.h"
-#include ".\includes\datastructs.h"
-#include ".\includes\PRINT.h"
+#include "./includes/box.h"
+#include "./includes/constants.h"
+#include "./includes/Waiter.h"
+#include "./includes/Baker.h"
+#include "./includes/datastructs.h"
+#include "./includes/PRINT.h"
 
 using namespace std;
 
@@ -28,7 +28,7 @@ mutex mutex_order_outQ;
 condition_variable cv_order_inQ;
 
 //when true its time for the baker to quit
-bool b_WaiterIsFinished = false;	
+bool b_WaiterIsFinished = false;
 
 //where orders are stored
 queue<ORDER> order_in_Q;
@@ -87,6 +87,20 @@ void audit_results() {
 
 int main()
 {
+	thread baking(doBaker, 20);
+	//thread waiting(doWaiter, 10, "./in1.txt");
+	//thread baking2(doBaker, 21);
+	//thread waiting2(doWaiter, 11, "./in2.txt");
+	thread waiting3(doWaiter, 12, "./in4.txt");
+
+	//waiting.join();
+	//waiting2.join();
+	waiting3.join();
+	baking.join();
+	//baking2.join();
+cout << endl;
+	audit_results();
+cout << endl;
 	return SUCCESS;
 }
 

@@ -3,7 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include <mutex>
-#include "..\includes\constants.h"
+#include "../includes/constants.h"
 
 class Logger
 {

@@ -1,0 +1,1 @@
+g++ -std=c++11 -pthread -g 410_proj4.cpp Baker/Baker.cpp Baker/box.cpp Waiter/Waiter.cpp Waiter/File_IO.cpp logger/logger.cpp -o exe.out

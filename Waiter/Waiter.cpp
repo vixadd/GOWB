@@ -1,7 +1,9 @@
 #include <string>
 #include "stdlib.h"
 
-#include "..\includes\Waiter.h"
+#include "../includes/externs.h"
+#include "../includes/Waiter.h"
+#include "../includes/PRINT.h"
 
 using namespace std;
 
@@ -15,6 +17,12 @@ Waiter::~Waiter() { }
  */
 int Waiter::getNext(ORDER &anOrder) {
 
+<<<<<<< HEAD
+=======
+	int status = myIO.getNext(anOrder);
+PRINT2("GETNEXT: Recieved Order: ", anOrder.order_number);
+	return status;
+>>>>>>> devLinux
 }
 
 /*
@@ -23,6 +31,27 @@ int Waiter::getNext(ORDER &anOrder) {
  * when the tickets are ready.
  */
 void Waiter::beWaiter() {
+<<<<<<< HEAD
 
+=======
+//PRINT1("\nOkay, We are a waiter now...");
+
+	ORDER o;
+	int status = getNext(o);
+	b_WaiterIsFinished = false;
+	while ( status == SUCCESS ) {
+
+PRINT3("BEWAITER: Inserting Order ", o.order_number, " into queue ");
+
+		mutex_order_outQ.lock();
+		order_in_Q.push(o);
+		mutex_order_outQ.unlock();
+
+		cv_order_inQ.notify_all();
+
+		status = getNext(o);
+	}
+	b_WaiterIsFinished = true;
+>>>>>>> devLinux
 }
 
